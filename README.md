@@ -6,6 +6,6 @@ ExcelPeek is a tool designed to help investigate potentially malicious Microsoft
 
 ## Documentation
 
-Use the [Installation Guide](https://github.com/slaughterjames/excelpeek/blob/master/docs/install.md) to get started.
+Use the [Installation Guide](https://github.com/slaughterjames/excelpeek/blob/main/docs/install.md) to get started.
 
-Go to the [User's Guide](https://github.com/slaughterjames/excelpeek/blob/master/docs/user_guide.md) for additional information.
+Go to the [User's Guide](https://github.com/slaughterjames/excelpeek/blob/main/docs/user_guide.md) for additional information.

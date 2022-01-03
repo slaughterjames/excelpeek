@@ -6,7 +6,7 @@ ExcelPeek has been tested on Ubuntu-based Linux distributions.  It is generally 
 
 1. Download the ExcelPeek files:
 ```bash
-wget  https://github.com/slaughterjames/excelpeek/archive/refs/heads/main.zip
+wget https://github.com/slaughterjames/excelpeek/archive/refs/heads/main.zip
 ```
 OR
 
