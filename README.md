@@ -1,4 +1,4 @@
-## ExcelPeek v0.1
+## ExcelPeek v0.2
 
 ExcelPeek is a tool designed to help investigate potentially malicious Microsoft Excel files.
  

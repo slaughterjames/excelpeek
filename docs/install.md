@@ -1,4 +1,4 @@
-## ExcelPeek v0.1 - Installation Guide
+## ExcelPeek v0.2 - Installation Guide
 
 ExcelPeek has been tested on Ubuntu-based Linux distributions.  It is generally recommended using the the latest available version (or at least the latest long-term supported version).
 
