@@ -1,4 +1,4 @@
-## ExcelPeek v0.1 - Installation Guide
+## ExcelPeek v0.2 - Installation Guide
 
 ExcelPeek has been tested on Ubuntu-based Linux distributions.  It is generally recommended using the the latest available version (or at least the latest long-term supported version).
 
@@ -6,12 +6,12 @@ ExcelPeek has been tested on Ubuntu-based Linux distributions.  It is generally 
 
 1. Download the ExcelPeek files:
 ```bash
-wget https://raw.githubusercontent.com/slaughterjames/mirage/master/get-mirage.sh -O get-mirage.sh  - ToDo
+wget  https://github.com/slaughterjames/excelpeek/archive/refs/heads/main.zip
 ```
 OR
 
 ```bash
-wget https://raw.githubusercontent.com/slaughterjames/mirage/master/get-mirage.sh -O get-mirage.sh  - ToDo
+gh repo clone slaughterjames/excelpeek
 ```
 
 2. Grant execution privileges:

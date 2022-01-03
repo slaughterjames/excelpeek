@@ -1,4 +1,4 @@
-## ExcelPeek v0.1 - User Guide
+## ExcelPeek v0.2 - User Guide
 
 ----
 
@@ -22,7 +22,8 @@ ExcelPeek has several command-line flags which are described below.
 
 | Flag | Description |
 |------------|-------------|
-| --file | Required - file being examined |
+| --file | Required - file being examined. |
+| --analyze | Optional - list the particulars of all worksheets. |
 | --list | Optional - list sheets |
 | --sheet | Optional - pick the sheet you want to investigate. |
 | --sheetstats | Optional - list the particulars of a specific sheet. |
@@ -32,6 +33,41 @@ ExcelPeek has several command-line flags which are described below.
 | --help | Optional - Prints list of flags. |
 
 ## Use Cases
+Analyzing all worksheets in an Excel file:
+```
+<install directory>/excelpeek/excelpeek.py --file d3e6387c8c6ba3060a1dd90333a80ccac9c5dee328770f22e6860d314d8eb547.xlsx --analyze
+[*] Length Arguments: 4
+[*] Arguments: 
+file: d3e6387c8c6ba3060a1dd90333a80ccac9c5dee328770f22e6860d314d8eb547.xlsx
+analyze: True
+
+****************************************************************************************************
+0. Info
+[*] Max Row: 4
+[*] Found 4 rows of data.
+[*] Max Column: 10
+[*] Found 10 columns of data.
+[*] Sheet State: visible
+****************************************************************************************************
+1. Macro1
+[*] Max Row: 275
+[*] Found 275 rows of data.
+[*] Max Column: 19
+[*] Found 19 columns of data.
+[*] Sheet State: hidden
+****************************************************************************************************
+2. Sheet1
+[*] Max Row: 4976
+[*] Found 4976 rows of data.
+[*] Max Column: 82
+[*] Found 82 columns of data.
+[*] Sheet State: hidden
+****************************************************************************************************
+
+[*] Program Complete
+
+```
+
 
 Listing all the sheets in an Excel file:
 ```bash

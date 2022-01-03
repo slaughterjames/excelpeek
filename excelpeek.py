@@ -1,20 +1,20 @@
 #! /usr/bin/env python3
 '''
-ExcelPeek v0.1 - Copyright 2021 James Slaughter,
-This file is part of ExcelPeek v0.1.
+ExcelPeek v0.2 - Copyright 2022 James Slaughter,
+This file is part of ExcelPeek v0.2.
 
-ExcelPeek v0.1 is free software: you can redistribute it and/or modify
+ExcelPeek v0.2 is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-ExcelPeek v0.1 is distributed in the hope that it will be useful,
+ExcelPeek v0.2 is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with ExcelPeek v0.1.  If not, see <http://www.gnu.org/licenses/>. 
+along with ExcelPeek v0.2.  If not, see <http://www.gnu.org/licenses/>. 
 '''
 
 #python import
@@ -41,11 +41,13 @@ def Usage():
     print ('Required Arguments:')
     print ('--file - file being examined')
     print ('Optional Arguments:')
+    print ('--analyze - list the particulars of all worksheets.')
     print ('--list - list sheets')
     print ('--sheet - pick the sheet you want to investigate.')
     print ('--sheetstats - list the particulars of a specific sheet.')
     print ('--range - range of cells to investigate - e.g. A1:Z200.')
     print ('--dump - dump any non-empty cells')
+    print ('--dumpall - dump all non-empty cells from each worksheet.')    
     print ('--debug - Prints verbose logging to the screen to troubleshoot issues with a recon installation.')
     print ('--help - You\'re looking at it!')
     print ('***NOTE*** openpyxl REQUIRES that the file format be Excel 2007 .xlsx!!!')
@@ -109,21 +111,59 @@ def Parse(args):
         print ('')
         return -1
 
-    if (CON.sheetstats == True) and (len(CON.sheet) < 3):
-        print (colored('[x] sheet must be used with sheetstats.', 'red', attrs=['bold']))
-        print ('')
-        return -1
+    #analyze will cause all other params to be ignored
+    if (option == 'analyze'):
+        CON.analyze = True
+        print (option + ': ' + str(CON.analyze))
+    else:
+        if (CON.sheetstats == True) and (len(CON.sheet) < 3):
+            print (colored('[x] sheet must be used with sheetstats.', 'red', attrs=['bold']))
+            print ('')
+            return -1
 
-    if (CON.dump == True) and (len(CON.sheet) < 3):
-        print (colored('[x] sheet must be used with dump.', 'red', attrs=['bold']))
-        print ('')
-        return -1
+        if (CON.dump == True) and (len(CON.sheet) < 3):
+            print (colored('[x] sheet must be used with dump.', 'red', attrs=['bold']))
+            print ('')
+            return -1
 
-    if (CON.range == ''):
-       CON.range = 'A1:Z200'
+        if (CON.range == ''):
+            CON.range = 'A1:Z200'
 
     print ('')   
     
+    return 0
+
+'''
+analyze()
+Function: - Pull stats on all available sheets in the workbook
+'''
+def analyze():
+    count = 0
+
+    # List all the sheets in the file.
+    print (colored('*' * 100, 'green', attrs=['bold']))
+    for sheetname in CON.wb.sheetnames:
+        print(str(count) + '. ' + sheetname)
+        try:
+            ws = CON.wb[sheetname]
+        except Exception as e:
+            print (colored('[x] Error: ' + str(e) + ' Terminating...', 'red', attrs=['bold']))
+            return -1
+
+        max_rows = ws.max_row
+        max_columns = ws.max_column
+        all_rows = list(ws.rows)
+        all_columns = list(ws.columns)
+        hidden = ws.sheet_state
+
+        print ('[*] Max Row: ' + str(max_rows))
+        print(f"[*] Found {len(all_rows)} rows of data.")
+        print ('[*] Max Column: ' + str(max_columns))
+        print(f"[*] Found {len(all_columns)} columns of data.")
+        print ('[*] Sheet State: ' + hidden)
+        print (colored('*' * 100, 'green', attrs=['bold'])) 
+        count +=1
+
     return 0
 
 '''
@@ -156,16 +196,22 @@ def sheetstats():
         return -1
 
     max_rows = ws.max_row
+    max_columns = ws.max_column
     all_rows = list(ws.rows)
+    all_columns = list(ws.columns)
+    hidden = ws.sheet_state
 
     print ('[*] Max Row: ' + str(max_rows))
     print(f"[*] Found {len(all_rows)} rows of data.")
+    print ('[*] Max Column: ' + str(max_columns))
+    print(f"[*] Found {len(all_columns)} columns of data.")
+    print ('[*] Sheet State: ' + hidden)
 
     return 0
 
 '''
 dumpsheet()
-Function: - Dump all cells
+Function: - Dump all cells in a worksheet
 '''
 def dumpsheet():
 
@@ -225,6 +271,8 @@ Function: - Attempts to exit the program cleanly when called
 '''
      
 def Terminate(exitcode):
+    print ('')
+    print ('[*] Program Complete')
     sys.exit(exitcode)
 
 '''
@@ -254,18 +302,21 @@ if __name__ == '__main__':
         print (colored('[x] Error: ' + str(e) + ' Terminating...', 'red', attrs=['bold']))
         Terminate(-1)
 
-    if (CON.list == True):
-        List()
-        Terminate(0)
+    if (CON.analyze == True):
+        analyze()    
+    else:
 
-    if (CON.sheetstats == True):
-        sheetstats()
+        if (CON.list == True):
+            List()
+            Terminate(0)
 
-    if (CON.dump == True):
-        dumpsheet()
+        if (CON.sheetstats == True):
+            sheetstats()
+            Terminate(0)
 
-    print ('')
-    print ('[*] Program Complete')
+        if (CON.dump == True):
+            dumpsheet()
+            Terminate(0)
 
     Terminate(0)
 '''
